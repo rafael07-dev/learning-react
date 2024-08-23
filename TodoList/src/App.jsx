@@ -1,34 +1,31 @@
 import { useState } from 'react'
 import './App.css'
 
+const TodoList = () => {
+
+  const [tasks, setTasks] = useState([{ id: null, name: '', decription: '', state: null }])
+
+  return (
+    <div>
+      {tasks.map((item, index) => (
+      <div key={index} className='card-todo'>
+        <h3>{item.name}</h3>
+        <p>{item.decription}</p>
+        <p>{item.state ? 'Pendiente' : 'Finalizada'}</p>
+      </div>
+      ))}
+    </div>
+  )
+
+}
+
 function App() {
-  const [todos, setTodos] = useState([
-    {
-      id: 0,
-      name: 'Sistemas',
-      description: 'Monitorear sistema',
-      state: true,
-    },
-    {
-      id: 0,
-      name: 'Redes',
-      description: 'Monitorear redes',
-      state: true,
-    }
-  ])
 
   return (
     <>
       <h1>TodoList</h1>
       <section className='container'>
-
-        {todos.map((item) => (
-          <div key={item.id} className='card-todo'>
-            <h3>{item.name}</h3>
-            <p>{item.description}</p>
-            <p>{item.state ? 'Pendiente' : 'Finalizada'}</p>
-          </div>
-        ))}
+        <TodoList/>
       </section>
     </>
   )
