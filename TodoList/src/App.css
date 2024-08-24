@@ -1,7 +1,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  box-sizing: 0;
   text-align: center;
 }
 
@@ -52,4 +52,14 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.add-tasks{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #454545;
+  border-radius: 5px;
+  padding: 30px ;
+  margin-bottom: 20px;
 }
