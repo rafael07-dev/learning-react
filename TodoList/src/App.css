@@ -38,10 +38,10 @@
 }
 
 .card-todo{
-  background-color: #888;
+  background-color: #3d3d3d;
   border-radius: 5px;
   padding: 10px;
-  height: 220px;
+  height: auto;
   width: 200px;
 }
 
@@ -58,8 +58,13 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: #454545;
+  background-color: #3d3d3d;
   border-radius: 5px;
   padding: 30px ;
   margin-bottom: 20px;
+}
+
+.tasks{
+  display: flex;
+  gap: 20px;
 }
