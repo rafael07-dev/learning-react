@@ -1,13 +1,15 @@
 import { TodoList } from '../components/TodoList'
+import { AddTask } from '../components/AddTask'
 import './App.css'
 
 function App() {
 
   return (
     <>
-      <h1>TodoList</h1>
+      <h1>ToDo List</h1>
       <section className='container'>
-        <TodoList />
+        <AddTask/>
+        <TodoList/>
       </section>
     </>
   )

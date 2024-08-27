@@ -45,11 +45,6 @@
   width: 200px;
 }
 
-.container{
-  display: flex;
-  gap: 10px;
-}
-
 .read-the-docs {
   color: #888;
 }
