@@ -1,4 +1,5 @@
-import { createContext, useReducer } from "react"
+import { createContext, useReducer, useState } from "react"
+import { useTask } from "../hooks/useTask"
 
 export const TaskContext = createContext()
 
@@ -36,6 +37,7 @@ const initialState = [
 ]
 
 function reducer(state, action) {
+
     if (action.type == ACTIONS.add_task) {
         return [
             ...state, {
@@ -66,8 +68,7 @@ function reducer(state, action) {
         const existingTask = state.some(item => item.id === id)
 
         if (existingTask) {
-            //console.log(action.payload);
-
+                    
         }
     }
 
@@ -78,6 +79,7 @@ function reducer(state, action) {
 function useTaskReducer() {
 
     const [state, dispatch] = useReducer(reducer, initialState)
+    const [addMode, setAddMode] = useState(null)
 
     function deleteTask(task) {
         dispatch({ type: 'delete_task', payload: task })
@@ -93,15 +95,15 @@ function useTaskReducer() {
         dispatch({ type: 'add_task', payload: task })
     }
 
-    return { state, dispatch, editTask, deleteTask, addTask}
+    return { state, dispatch, addMode, setAddMode, editTask, deleteTask, addTask}
 }
 
 export const TaskProvider = ({children}) => {
 
-    const {state, dispatch, deleteTask, editTask, addTask} = useTaskReducer()
+    const {state, dispatch, deleteTask, editTask, addTask, addMode, setAddMode} = useTaskReducer()
 
     return(
-        <TaskContext.Provider value={{state, dispatch, deleteTask, editTask, addTask}}>
+        <TaskContext.Provider value={{state, dispatch, deleteTask, editTask, addTask, addMode, setAddMode}}>
             {children}
         </TaskContext.Provider>
     )

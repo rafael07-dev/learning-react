@@ -4,11 +4,9 @@ export const TodoList = () => {
 
   const {state, deleteTask, editTask} = useTask()
 
-  console.log(state);
-  
-
   return (
     <div>
+      <h3>Aqui está tu lista de pendientes</h3>
       <div className="tasks">
         {state.map((item, index) => (
           <div key={index} className='card-todo'>
@@ -23,5 +21,4 @@ export const TodoList = () => {
       </div>
     </div>
   )
-
 }

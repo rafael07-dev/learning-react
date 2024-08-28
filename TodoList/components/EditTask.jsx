@@ -1,11 +1,6 @@
-import { useTask } from "../hooks/useTask"
 import { useState } from "react"
 
-export function AddTask() {
-
-  const [active, setActive] = useState(false)
-
-  const { addTask } = useTask()
+export function EditTask({ isOpen }) {
 
   const [inputs, setInputs] = useState({ inputName: '', inputDescription: '', inputDone: '' })
 
@@ -22,13 +17,13 @@ export function AddTask() {
   function handleSubmit(event) {
     event.preventDefault()
 
-    addTask({ name: inputs.inputName, description: inputs.inputDescription, done: inputs.inputDone })
+    //addTask({name: inputs.inputName, description: inputs.inputDescription, done: inputs.inputDone })
     setInputs({ inputName: '', inputDescription: '' })
   }
 
   return (
     <div className='add-tasks'>
-      <h3>Añadir nueva tarea</h3>
+      <h3>Editar tarea</h3>
       <form onSubmit={handleSubmit}>
         <input type="text" name='inputName' onChange={handleChangeInput} placeholder='Name' value={inputs.inputName} />
         <input type="text" name='inputDescription' onChange={handleChangeInput} placeholder='Description' value={inputs.inputDescription} />
