@@ -1,21 +1,20 @@
-import { TodoList } from '../components/TodoList'
-import { AddTask } from '../components/AddTask'
-import { useTask } from '../hooks/useTask'
-import { EditTask } from '../components/EditTask'
-import './App.css'  
+import { TodoList } from "../components/TodoList.jsx";
+import { AddTask } from '../components/AddTask.jsx';
+import { Header } from '../components/Header.jsx';
+import { Aside } from "../components/Aside.jsx";
+import './App.css'
 
 function App() {
 
-  const { addMode, setAddMode } = useTask()
-
   return (
     <>
-      <h1>ToDo List</h1>
-      <main className='container'>
-        <AddTask/>
-        <EditTask isOpen />
-        <TodoList />    
-      </main>
+      <Header />
+      <div className="principal-content">
+        <Aside />
+        <AddTask />
+        <TodoList />
+      </div>
+
     </>
   )
 }
