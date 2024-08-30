@@ -1,12 +1,9 @@
 import { useTask } from "../hooks/useTask"
 import { useState } from "react"
+import '../components/AddTask.css'
 
 export function AddTask() {
-
-  const [active, setActive] = useState(false)
-
   const { addTask } = useTask()
-
   const [inputs, setInputs] = useState({ inputName: '', inputDescription: '', inputDone: '' })
 
   function handleChangeInput(event) {
@@ -28,17 +25,19 @@ export function AddTask() {
 
   return (
     <div className='add-tasks'>
-      <h3>Añadir nueva tarea</h3>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name='inputName' onChange={handleChangeInput} placeholder='Name' value={inputs.inputName} />
-        <input type="text" name='inputDescription' onChange={handleChangeInput} placeholder='Description' value={inputs.inputDescription} />
-        <select name="inputDone" id="done" >
-          <option>--seleccionar--</option>
-          <option >Finalizada</option>
-          <option >Pendiente</option>
-        </select>
-        <button type='submit'>Agregar</button>
-      </form>
+      <h2>Añadir nueva tarea</h2>
+      <div className="task-content">
+        <form onSubmit={handleSubmit}>
+          <input type="text" name='inputName' onChange={handleChangeInput} placeholder='Name' value={inputs.inputName} />
+          <input type="text" name='inputDescription' onChange={handleChangeInput} placeholder='Description' value={inputs.inputDescription} />
+          <select name="inputDone" id="done" >
+            <option>--seleccionar--</option>
+            <option >Finalizada</option>
+            <option >Pendiente</option>
+          </select>
+          <button className="button" type='submit'>Agregar</button>
+        </form>
+      </div>
     </div>
   )
 }
