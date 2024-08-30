@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export function EditTask({ isOpen }) {
+export default function EditTask() {
 
   const [inputs, setInputs] = useState({ inputName: '', inputDescription: '', inputDone: '' })
 
