@@ -19,7 +19,8 @@ a:hover {
 
 body {
   margin: 0;
-  background-color: #efefef;
+  background-color: rgb(44, 48, 59, 1);
+  color: white;
 }
 
 h1 {
@@ -34,8 +35,9 @@ h1 {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  color: black;
+  color: white;
   cursor: pointer;
+  background-color: rgb(44, 48, 59, 1);
   transition: border-color 0.25s;
 }
 button:hover {

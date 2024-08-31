@@ -1,5 +1,5 @@
 .add-tasks{
-    background-color: white;
+    background-color: rgb(35, 39, 47, 1);
     border-radius: 5px;
     padding: 20px;
 }
@@ -7,6 +7,7 @@
 .task-content form{
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 10px;
 }
 
