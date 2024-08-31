@@ -1,77 +1,101 @@
 import { createContext, useReducer, useState } from "react"
-import { useTask } from "../hooks/useTask"
+//import { useTask } from "../hooks/useTask"
 
 export const TaskContext = createContext()
 
 const ACTIONS = {
     add_task: 'add_task',
     delete_task: 'delete_task',
-    edit_task: 'edit_task'
+    addToCompletedTask: 'add_to_completed' 
 }
 
-const initialState = [
-    {
-        id: 1,
-        name: "Tarea 1",
-        description: "Descripción de la tarea 1",
-        done: "pendiente"
-      },
-      {
-        id: 2,
-        name: "Tarea 2",
-        description: "Descripción de la tarea 2",
-        done: "finalizada"
-      },
-      {
-        id: 3,
-        name: "Tarea 3",
-        description: "Descripción de la tarea 3",
-        done: "pendiente"
-      },
-      {
-        id: 4,
-        name: "Tarea 4",
-        description: "Descripción de la tarea 4",
-        done: "finalizada"
-      }
-]
+const initialState = {
+    task: [
+        {
+            id: 1,
+            name: "Tarea 1",
+            description: "Descripción de la tarea 1",
+            done: false
+          },
+          {
+            id: 2,
+            name: "Tarea 2",
+            description: "Descripción de la tarea 2",
+            done: true
+          },
+          {
+            id: 3,
+            name: "Tarea 3",
+            description: "Descripción de la tarea 3",
+            done: false
+          },
+          {
+            id: 4,
+            name: "Tarea 4",
+            description: "Descripción de la tarea 4",
+            done: true
+        }
+    ],
+    completedTask: [],
+    pendingTask: []
+}
 
 function reducer(state, action) {
 
     if (action.type == ACTIONS.add_task) {
-        return [
-            ...state, {
-                id: state.length + 1,
-                name: action.payload.name,
-                description: action.payload.description,
-                done: action.payload.done
-            }
-        ]
+        const selectValue = action.payload.done === 'true' ? true: false;
+
+        const newTask = {
+            id: state.task.length +1,
+            name: action.payload.name, 
+            description: action.payload.description, 
+            done: selectValue
+        }
+
+        function checkIsDoneTask(){
+            return selectValue === false ? [...state.pendingTask, newTask] : [...state.pendingTask];
+        }
+
+        return {
+            ...state,
+            pendingTask: checkIsDoneTask(),
+            task: [...state.task, newTask]
+        }
     }
 
     if (action.type == ACTIONS.delete_task) {
-        const { id } = action.payload
+        const { id } = action.payload        
 
         //verificar existencia de la task por id
-        const existingTask = state.some((id) => id === id)
+        const existingTask = state.task.some((id) => id === id)
 
         if (existingTask) {
-            return state.filter((item) => item.id != id);
+            return {
+                ...state,
+                task: state.task.filter((item) => item.id != id)
+            } 
         }
 
         return state
     }
 
-    if (action.type === ACTIONS.edit_task) {
-
-        const { id } = action.payload
-        const existingTask = state.some(item => item.id === id)
-
-        if (existingTask) {
-                    
+    if (action.type === ACTIONS.addToCompletedTask) {
+        
+        return {
+            ...state,
+            pendingTask: state.pendingTask.filter(item => item.id != action.payload.id),
+            completedTask: [
+                ...state.completedTask,
+                {
+                    id: action.payload.id,
+                    name: action.payload.name,
+                    description: action.payload.description,
+                    done: true
+                }
+            ]
         }
     }
-
+    
     return state
 
 }
@@ -79,7 +103,9 @@ function reducer(state, action) {
 function useTaskReducer() {
 
     const [state, dispatch] = useReducer(reducer, initialState)
-    const [addMode, setAddMode] = useState(null)
+    const [filter, setFilter] = useState('all')
+
+    console.log(state);
 
     function deleteTask(task) {
         dispatch({ type: 'delete_task', payload: task })
@@ -90,20 +116,22 @@ function useTaskReducer() {
     }
 
     function addTask(task) {
-        console.log(task);
-        
         dispatch({ type: 'add_task', payload: task })
     }
 
-    return { state, dispatch, addMode, setAddMode, editTask, deleteTask, addTask}
+    function addToCompleted(task){
+        dispatch({type: 'add_to_completed', payload: task})
+    }
+
+    return { state, dispatch, editTask, deleteTask, addTask, addToCompleted, filter, setFilter}
 }
 
 export const TaskProvider = ({children}) => {
 
-    const {state, dispatch, deleteTask, editTask, addTask, addMode, setAddMode} = useTaskReducer()
+    const {state, dispatch, deleteTask, editTask, addTask, addToCompleted, filter, setFilter} = useTaskReducer()
 
     return(
-        <TaskContext.Provider value={{state, dispatch, deleteTask, editTask, addTask, addMode, setAddMode}}>
+        <TaskContext.Provider value={{state, dispatch, deleteTask, editTask, addTask, addToCompleted, filter, setFilter}}>
             {children}
         </TaskContext.Provider>
     )
