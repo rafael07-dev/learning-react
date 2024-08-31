@@ -5,17 +5,27 @@ import '../components/TodoList.css'
 
 export const TodoList = () => {
 
-  const {state, deleteTask, editTask} = useTask()
+  const {state, deleteTask, addToCompleted, filter} = useTask()
+
+  let taskToShow;
+
+  if (filter === 'all') {
+    taskToShow = state.task;
+  }else if (filter === 'pending'){
+    taskToShow = state.pendingTask
+  }else if(filter == 'completed'){
+    taskToShow = state.completedTask
+  }
 
   return (
     <div className="tasks">
-      <h2>Todas mis tareas</h2>
-        {state.map((item, index) => (
+      <h2>{filter == 'all' ? 'Todas mis tareas': filter === 'pending'?  'Tareas pendientes': 'Tareas completadas'}</h2>
+        {taskToShow.map((item, index) => (
           <div key={index} className='card-todo'>
             <h3>{item.name}</h3>
             <p>{item.description}</p>
             <p>{item.done ? 'Finalizada' : 'Pendiente'}</p>
-            <a className="button" onClick={()=> editTask(item)}><FontAwesomeIcon icon={faCheck} /></a>
+            <a className="button" onClick={()=> addToCompleted(item)}><FontAwesomeIcon icon={faCheck} /></a>
             <a className="button" onClick={()=> deleteTask(item)}><FontAwesomeIcon icon={faTrash} /></a>
           </div>
         ))
