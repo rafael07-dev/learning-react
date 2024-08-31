@@ -1,19 +1,17 @@
-import { useState } from 'react'
 import '../components/Aside.css'
+import { useTask } from '../hooks/useTask'
 
 export function Aside() {
-
-    const [activeOption, setActiveOption] = useState('todas')
-
+    const {filter, setFilter} = useTask()
 
     return (
         <aside className="aside">
             <h3>TAREAS</h3>
             <div>
                 <ul>
-                    <li className={activeOption != 'todas' ? '': 'active'} onClick={() => setActiveOption('todas')}><p>Todas</p></li>
-                    <li onClick={() => setActiveOption('pendientes')} className={activeOption === 'pendientes' ? 'active': ''}><p>Pendientes</p></li>
-                    <li onClick={() => setActiveOption('completadas')} className={activeOption === 'completadas' ? 'active': ''}><p>Completadas</p></li>
+                    <li className={filter != 'all' ? '': 'active'} onClick={() => setFilter('all')}><p>Todas</p></li>
+                    <li onClick={() => setFilter('pending')} className={filter === 'pending' ? 'active': ''}><p>Pendientes</p></li>
+                    <li onClick={() => setFilter('completed')} className={filter === 'completed' ? 'active': ''}><p>Completadas</p></li>
                 </ul>
             </div>
         </aside>
