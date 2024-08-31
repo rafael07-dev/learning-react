@@ -28,12 +28,12 @@ export function AddTask() {
       <h2>Añadir nueva tarea</h2>
       <div className="task-content">
         <form onSubmit={handleSubmit}>
-          <input type="text" name='inputName' onChange={handleChangeInput} placeholder='Name' value={inputs.inputName} />
-          <input type="text" name='inputDescription' onChange={handleChangeInput} placeholder='Description' value={inputs.inputDescription} />
-          <select name="inputDone" id="done" >
-            <option>--seleccionar--</option>
-            <option >Finalizada</option>
-            <option >Pendiente</option>
+          <input className="search-bar" type="text" name='inputName' onChange={handleChangeInput} placeholder='Name' value={inputs.inputName} />
+          <input className="search-bar" type="text" name='inputDescription' onChange={handleChangeInput} placeholder='Description' value={inputs.inputDescription} />
+          <select onChange={handleChangeInput} className="search-bar" name="inputDone" id="done" >
+            <option value= ''>--seleccionar--</option>
+            <option value= 'true'>Finalizada</option>
+            <option value= 'false'>Pendiente</option>
           </select>
           <button className="button" type='submit'>Agregar</button>
         </form>

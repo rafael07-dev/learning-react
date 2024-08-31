@@ -1,6 +1,6 @@
 import { useTask } from "../hooks/useTask"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faCheck } from '@fortawesome/free-solid-svg-icons';
 import '../components/TodoList.css'
 
 export const TodoList = () => {
@@ -15,7 +15,7 @@ export const TodoList = () => {
             <h3>{item.name}</h3>
             <p>{item.description}</p>
             <p>{item.done ? 'Finalizada' : 'Pendiente'}</p>
-            <a className="button" onClick={()=> editTask(item)}><FontAwesomeIcon icon={faPenToSquare} /></a>
+            <a className="button" onClick={()=> editTask(item)}><FontAwesomeIcon icon={faCheck} /></a>
             <a className="button" onClick={()=> deleteTask(item)}><FontAwesomeIcon icon={faTrash} /></a>
           </div>
         ))
