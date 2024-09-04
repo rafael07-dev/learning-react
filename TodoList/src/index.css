@@ -19,8 +19,15 @@ a:hover {
 
 body {
   margin: 0;
+  padding: 0;
   background-color: rgb(44, 48, 59, 1);
   color: white;
+}
+
+.container{
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 h1 {

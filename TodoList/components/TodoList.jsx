@@ -18,10 +18,10 @@ export const TodoList = () => {
   }
 
   return (
-    <div className="tasks">
+    <div className="tasks-list">
       <h2>{filter == 'all' ? 'Todas mis tareas': filter === 'pending'?  'Tareas pendientes': 'Tareas completadas'}</h2>
         {taskToShow.map((item, index) => (
-          <div key={index} className='card-todo'>
+          <div key={index} className='task'>
             <h3>{item.name}</h3>
             <p>{item.description}</p>
             <p>{item.done ? 'Finalizada' : 'Pendiente'}</p>

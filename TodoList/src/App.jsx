@@ -9,14 +9,16 @@ function App() {
   return (
     <>
       <Header />
-      <div className="principal-content">
+      <div className="main-content">
         <Aside />
-        <AddTask />
-        <TodoList />
+        <section className="content">
+          <AddTask />
+          <TodoList />
+        </section>
       </div>
 
     </>
   )
 }
 
-export default App
+export default App;
