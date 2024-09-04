@@ -43,22 +43,27 @@ const initialState = {
 function reducer(state, action) {
 
     if (action.type == ACTIONS.add_task) {
-        const selectValue = action.payload.done === 'true' ? true: false;
+        const isDone = action.payload.done === 'true' ? true: false;
 
         const newTask = {
             id: state.task.length +1,
             name: action.payload.name, 
             description: action.payload.description, 
-            done: selectValue
+            done: isDone
         }
 
-        function checkIsDoneTask(){
-            return selectValue === false ? [...state.pendingTask, newTask] : [...state.pendingTask];
+        function checkIsPendingTask(){
+            return isDone === false ? [...state.pendingTask, newTask] : [...state.pendingTask];
+        }
+
+        function checkIsCompletedTask(){
+            return isDone === true ? [...state.completedTask, newTask] : [...state.completedTask];
         }
 
         return {
             ...state,
-            pendingTask: checkIsDoneTask(),
+            pendingTask: checkIsPendingTask(),
+            completedTask: checkIsCompletedTask(),
             task: [...state.task, newTask]
         }
     }
@@ -80,20 +85,29 @@ function reducer(state, action) {
     }
 
     if (action.type === ACTIONS.addToCompletedTask) {
-        
-        return {
-            ...state,
-            pendingTask: state.pendingTask.filter(item => item.id != action.payload.id),
-            completedTask: [
-                ...state.completedTask,
-                {
-                    id: action.payload.id,
-                    name: action.payload.name,
-                    description: action.payload.description,
-                    done: true
-                }
-            ]
+        const {id} = action.payload
+
+        const existingTask = state.completedTask.some(item => item.id === id)
+
+        if (!existingTask) {
+            
+            return {
+                ...state,
+                pendingTask: state.pendingTask.filter(item => item.id != action.payload.id),
+                completedTask: [
+                    ...state.completedTask,
+                    {
+                        id: action.payload.id,
+                        name: action.payload.name,
+                        description: action.payload.description,
+                        done: true
+                    }
+                ]
+            }
         }
+
+        return state
+        
     }
     
     return state
