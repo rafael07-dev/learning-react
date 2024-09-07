@@ -6,7 +6,8 @@ export const TaskContext = createContext()
 const ACTIONS = {
     add_task: 'add_task',
     delete_task: 'delete_task',
-    addToCompletedTask: 'add_to_completed' 
+    addToCompletedTask: 'add_to_completed',
+    filteredTask: 'filteredTask'
 }
 
 const initialState = {
@@ -37,7 +38,8 @@ const initialState = {
         }
     ],
     completedTask: [],
-    pendingTask: []
+    pendingTask: [],
+    filteredTask: []
 }
 
 function reducer(state, action) {
@@ -109,6 +111,23 @@ function reducer(state, action) {
         return state
         
     }
+
+    if (action.type === ACTIONS.filteredTask) {
+
+        const [id] = action.payload.map(item => item.id)
+
+        const existingTask = state.task.some((item) => (item.id === id))        
+
+        if (existingTask) {
+            return {
+                ...state,
+                filteredTask: action.payload
+            }
+        }
+        
+        return state
+        
+    }
     
     return state
 
@@ -137,15 +156,19 @@ function useTaskReducer() {
         dispatch({type: 'add_to_completed', payload: task})
     }
 
-    return { state, dispatch, editTask, deleteTask, addTask, addToCompleted, filter, setFilter}
+    function addToFilteredTask(tasks){
+        dispatch({type: 'filteredTask', payload: tasks})
+    }
+
+    return { state, dispatch, editTask, deleteTask, addTask, addToCompleted, addToFilteredTask, filter, setFilter}
 }
 
 export const TaskProvider = ({children}) => {
 
-    const {state, dispatch, deleteTask, editTask, addTask, addToCompleted, filter, setFilter} = useTaskReducer()
+    const {state, dispatch, deleteTask, editTask, addTask, addToCompleted, addToFilteredTask, filter, setFilter} = useTaskReducer()
 
     return(
-        <TaskContext.Provider value={{state, dispatch, deleteTask, editTask, addTask, addToCompleted, filter, setFilter}}>
+        <TaskContext.Provider value={{state, dispatch, deleteTask, editTask, addTask, addToCompleted, addToFilteredTask, filter, setFilter}}>
             {children}
         </TaskContext.Provider>
     )
